@@ -26,7 +26,7 @@ QuickBite provides a centralized digital solution that improves restaurant effic
 * Track order status
 * Order history management
 
-### 👨‍🍳 Kitchen Management System
+###  Kitchen Management System
 
 * Receive customer orders in real-time
 * Manage order preparation workflow
