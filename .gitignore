@@ -1,0 +1,26 @@
+# Environment & Sensitive Credentials
+.env
+.env.local
+.env.*.local
+
+# Audit & Diagnostic Markdown Files
+*.md
+!README.md
+
+# Database Backups & Dumps
+*.sql
+*.bat
+
+# Temporary Conversion / Utility Scripts
+adjustVw.js
+pxToVwGlobal.js
+vwToRem.js
+download_product_images.js
+alter_db.php
+test_schema.php
+
+# Dependencies & Build Outputs
+node_modules/
+dist/
+build/
+.DS_Store

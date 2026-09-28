@@ -1,0 +1,326 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+/* =======================================================
+   🛡️ STRICT VIEWPORT & STICKY-COMPLIANT OVERFLOW
+   ======================================================= */
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  scroll-behavior: smooth;
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+/* =======================================================
+   💻 LAPTOP & SCALED DISPLAY FLUID AUTO-FIT ENGINE
+   Auto-adjusts rem scale for standard laptops (1366x768 or 1080p
+   at 125%/150% Windows scaling) so customer portal fits naturally
+   without manual zoom-out. Large desktops retain 16px.
+   ======================================================= */
+@media screen and (min-width: 1024px) and (max-width: 1440px),
+       screen and (min-width: 1024px) and (max-height: 820px) {
+  html, :root {
+    font-size: 14px; /* Proportionately scales all rem-based typography & spacing down by 12.5% */
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1280px),
+       screen and (min-width: 1024px) and (max-height: 720px) {
+  html, :root {
+    font-size: 13.5px; /* Compact laptops (e.g. 1280x720 effective or 1366x768 at 125%) */
+  }
+}
+
+/* =======================================================
+   🍽️ GLOBAL THEME VARIABLES (Big Bite Color Scheme)
+   ======================================================= */
+:root {
+  /* --- Brand Colors (Bold Fast Food Theme) --- */
+  --brand-red: #E60000; /* Spicy Red: High energy, appetizing */
+  --brand-red-dark: #B30000;
+  --brand-yellow: #FFC107; /* Crispy Yellow: Hover effects, Badges */
+  --brand-yellow-dark: #e0a800;
+  
+  /* --- Dark Theme Default Colors --- */
+  /* Midnight Dark (#0A0A0C) for background, Dark Onyx (#141417) for panels */
+  --home-bg: #0A0A0C; 
+  --web-bg: #0A0A0C;
+  --admin-bg: #0A0A0C;
+  --bg-body: #0A0A0C;
+  
+  --panel-bg: #141417; /* Dark Onyx for panels */
+  --web-panel: #141417;
+  --admin-panel: #141417;
+  
+  --border-color: #2A2A30;
+  --web-border: #2A2A30;
+  --admin-border: #2A2A30;
+  
+  --text-main: #FFFFFF; /* High contrast bright white */
+  --admin-text: #FFFFFF;
+  --text-muted: #A0A0A5; /* Sleek cool grey for muted text */
+  --admin-muted: #A0A0A5;
+  
+  --admin-orange: #E60000;
+  --admin-yellow: #FFC107;
+  --btn-main: #E60000;
+  --btn-text: #ffffff;
+  
+  --badge-bg: rgba(255, 193, 7, 0.1);
+  --badge-text: #FFC107;
+  --badge-border: rgba(255, 193, 7, 0.2);
+  
+  --overlay-gradient: linear-gradient(to top, #0A0A0C 5%, rgba(10, 10, 12, 0.6) 60%, rgba(10, 10, 12, 0.9) 100%);
+  --shadow-glow: 0 8px 30px rgba(230, 0, 0, 0.25);
+  
+  /* --- Cashier / POS Variables --- */
+  --pos-bg: #0A0A0C;
+  --pos-panel: #141417;
+  --pos-border: #2A2A30;
+  
+  /* --- Kitchen Variables --- */
+  --k-bg: #0A0A0C;
+  --k-panel: #141417;
+  --k-border: #2A2A30;
+  --k-text: #FFFFFF;
+  --k-muted: #A0A0A5;
+  --status-yellow: #FFC107;
+  --status-green: #00C853; /* Vibrant green for fast food readiness */
+  
+  /* --- Rider/Dispatch Variables --- */
+  --rider-success: #00C853;
+}
+
+/* --- Light Theme Override --- */
+[data-theme="light"] {
+  /* Slate & White Theme (SaaS Modern Look) */
+  --home-bg: #F8FAFC; /* Slate-50 */
+  --web-bg: #F8FAFC;
+  --admin-bg: #F1F5F9; /* Slate-100 for more contrast with panels */
+  --bg-body: #F8FAFC;
+  
+  --panel-bg: #FFFFFF; /* Pure white panels */
+  --web-panel: #FFFFFF;
+  --admin-panel: #FFFFFF;
+  
+  --border-color: #E2E8F0; /* Slate-200 */
+  --web-border: #E2E8F0;
+  --admin-border: #E2E8F0;
+  
+  --text-main: #0F172A; /* Slate-900 (High readable contrast but not pure black) */
+  --admin-text: #0F172A;
+  --text-muted: #64748B; /* Slate-500 */
+  --admin-muted: #64748B;
+  
+  --brand-red: #EF4444; /* Bright energetic red */
+  --brand-red-dark: #DC2626;
+  --brand-yellow: #F59E0B; /* Amber-500 */
+  --brand-yellow-dark: #D97706;
+  
+  --admin-orange: #EF4444;
+  --admin-yellow: #F59E0B;
+  --btn-main: #EF4444;
+  
+  --badge-bg: #FEF3C7; /* Amber-100 */
+  --badge-text: #B45309; /* Amber-700 */
+  --badge-border: #FDE68A; /* Amber-200 */
+  
+  --overlay-gradient: linear-gradient(to top, #F8FAFC 5%, rgba(248, 250, 252, 0.7) 50%, rgba(248, 250, 252, 0.9) 100%);
+  --shadow-glow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  
+  /* --- Cashier / POS Variables --- */
+  --pos-bg: #F1F5F9;
+  --pos-panel: #FFFFFF;
+  --pos-border: #E2E8F0;
+  
+  /* --- Kitchen Variables --- */
+  --k-bg: #F1F5F9;
+  --k-panel: #FFFFFF;
+  --k-border: #E2E8F0;
+  --k-text: #0F172A;
+  --k-muted: #64748B;
+  --status-yellow: #F59E0B;
+  --status-green: #10B981; /* Emerald-500 */
+}
+
+/* SWEETALERT PREMIUM CUSTOMIZATION */
+.swal2-container {
+  z-index: 999999 !important; /* Modal ke upar laane ke liye */
+}
+
+.swal2-popup {
+  border-radius: 16px !important;
+  padding: 1.5em 2em !important;
+  font-family: inherit !important;
+}
+
+/* Dark Mode SweetAlert2 */
+.dark .swal2-popup,
+[data-theme="dark"] .swal2-popup {
+  background-color: #161619 !important;
+  border: 1px solid #2a2a30 !important;
+  color: #f5f5f7 !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7) !important;
+}
+
+.dark .swal2-title,
+[data-theme="dark"] .swal2-title {
+  color: #ffffff !important;
+  font-size: 1.5em !important;
+}
+
+.dark .swal2-html-container,
+[data-theme="dark"] .swal2-html-container {
+  color: #8e8e93 !important;
+  font-size: 1em !important;
+}
+
+.dark .swal2-cancel,
+[data-theme="dark"] .swal2-cancel {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #9ca3af !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Light Mode SweetAlert2 Overrides */
+[data-theme="light"] .swal2-popup,
+.light .swal2-popup {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .swal2-title,
+.light .swal2-title {
+  color: #0f172a !important;
+  font-size: 1.5em !important;
+}
+
+[data-theme="light"] .swal2-html-container,
+.light .swal2-html-container {
+  color: #475569 !important;
+  font-size: 1em !important;
+}
+
+[data-theme="light"] .swal2-cancel,
+.light .swal2-cancel {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+/* Error Icon Colors */
+.swal2-icon.swal2-error {
+  border-color: #d32f2f !important;
+  color: #d32f2f !important;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: #d32f2f !important;
+}
+
+/* Success Icon Colors */
+.swal2-icon.swal2-success {
+  border-color: #22c55e !important;
+  color: #22c55e !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #22c55e !important;
+}
+.swal2-icon.swal2-success .swal2-success-ring {
+  border-color: rgba(34, 197, 94, 0.3) !important;
+}
+
+/* Custom Confirm Button */
+.swal2-confirm {
+  background-color: #d32f2f !important;
+  border-radius: 8px !important;
+  padding: 10px 24px !important;
+  font-weight: bold !important;
+  box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.swal2-confirm:hover {
+  background-color: #b71c1c !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(211, 47, 47, 0.6) !important;
+}
+
+/* Universal Theme Toggle Button */
+.theme-toggle-btn {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--brand-yellow) !important;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0 !important;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(251, 192, 45, 0.1) !important;
+  border-color: var(--brand-yellow) !important;
+  transform: scale(1.08);
+}
+
+/* =======================================================
+   🎨 SLEEK MINIMALIST CUSTOM SCROLLBAR
+   ======================================================= */
+.custom-sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
+}
+
+.custom-sidebar-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-sidebar-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.35);
+  border-radius: 9999px;
+}
+
+.custom-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.55);
+}
+
+.dark .custom-sidebar-scroll,
+[data-theme="dark"] .custom-sidebar-scroll {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.dark .custom-sidebar-scroll::-webkit-scrollbar-thumb,
+[data-theme="dark"] .custom-sidebar-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark .custom-sidebar-scroll::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .custom-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+

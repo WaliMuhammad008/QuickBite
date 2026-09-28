@@ -1,0 +1,647 @@
+/* =========================================
+   ORDER TRACKER & TIMELINE
+   ========================================= */
+.order-tracker-page {
+    --otp-bg: #0a0a0a;
+    --otp-card-bg: linear-gradient(145deg, #111111, #181818);
+    --otp-border: #2a2a2a;
+    --otp-red: #ef4444;
+    --otp-red-glow: rgba(239, 68, 68, 0.4);
+    --otp-text-main: #ffffff;
+    --otp-text-muted: #aaaaaa;
+}
+
+.otp-container {
+    max-width: 850px;
+    margin: 50px auto;
+    padding: 0 20px;
+    min-height: 70vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.otp-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--otp-border);
+    padding-bottom: 15px;
+}
+
+.otp-title {
+    font-family: "Oswald", sans-serif;
+    font-size: 34px;
+    text-transform: uppercase;
+    color: var(--otp-text-main);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.otp-icon-red {
+    color: var(--otp-red);
+}
+
+.otp-search-form {
+    display: flex;
+    align-items: center;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 30px;
+    padding: 4px;
+    transition: 0.3s;
+    width: 350px;
+}
+
+.otp-search-form:focus-within {
+    border-color: var(--otp-red);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.otp-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-main, #fff);
+    padding: 10px 15px;
+    font-size: 14px;
+    outline: none;
+}
+
+.otp-search-btn {
+    background: var(--otp-red);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.otp-search-btn:hover {
+    background: #c62828;
+    transform: scale(1.05);
+}
+
+.otp-empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: var(--otp-card-bg);
+    border: 1px dashed #444;
+    border-radius: 20px;
+}
+
+.otp-empty-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 35px;
+    color: #444;
+}
+
+.otp-empty-state h3 {
+    color: var(--otp-text-main);
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.otp-empty-state p {
+    color: var(--otp-text-muted);
+    font-size: 16px;
+}
+
+.otp-premium-card {
+    background: var(--otp-card-bg);
+    border: 1px solid var(--otp-border);
+    border-radius: 20px;
+    margin-bottom: 35px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.otp-premium-card:hover {
+    transform: translateY(-5px);
+    border-color: #444;
+    box-shadow: 0 15px 40px rgba(239, 68, 68, 0.1);
+}
+
+.otp-card-header {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--otp-border);
+}
+
+.otp-order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.otp-order-id {
+    font-family: "Oswald", sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--otp-text-main);
+    letter-spacing: 1px;
+}
+
+.otp-order-time {
+    color: var(--otp-text-muted);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.otp-status-badge {
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.otp-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.otp-status-badge.pending {
+    background: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.otp-status-badge.pending .otp-status-dot {
+    background: #ffd700;
+}
+
+.otp-status-badge.cooking {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--otp-red);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.otp-status-badge.cooking .otp-status-dot {
+    background: var(--otp-red);
+    animation: pulseDot 1.5s infinite;
+}
+
+.otp-status-badge.ready {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.otp-status-badge.ready .otp-status-dot {
+    background: #2ecc71;
+}
+
+@keyframes pulseDot {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+.otp-progress-section {
+    padding: 35px 25px 25px;
+    border-bottom: 1px dashed #333;
+}
+
+.otp-progress-bar-container {
+    position: relative;
+}
+
+.otp-progress-track {
+    position: absolute;
+    top: 22px;
+    left: 40px;
+    right: 40px;
+    height: 6px;
+    background: #222;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.otp-progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1), background 1.2s ease, box-shadow 1.2s ease;
+}
+
+.otp-progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+.otp-step-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+}
+
+.otp-step-icon {
+    width: 50px;
+    height: 50px;
+    background: #1a1a1a;
+    border: 3px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    transition: 0.4s ease;
+    font-size: 16px;
+}
+
+.otp-step-wrapper.active .otp-step-icon {
+    color: #fff;
+}
+
+.otp-step-wrapper.step-pending .otp-step-icon {
+    background: #f59e0b;
+    border-color: #f59e0b;
+}
+
+.otp-step-wrapper.step-cooking .otp-step-icon {
+    background: var(--otp-red);
+    border-color: var(--otp-red);
+}
+
+.otp-step-wrapper.step-ready .otp-step-icon {
+    background: #10b981;
+    border-color: #10b981;
+}
+
+.otp-step-wrapper.current.step-pending .otp-step-icon {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    animation: currentPulse 2s infinite;
+}
+.otp-step-wrapper.current.step-cooking .otp-step-icon {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+    animation: currentPulse 2s infinite;
+}
+.otp-step-wrapper.current.step-ready .otp-step-icon {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    animation: pulseReady 2s infinite;
+}
+
+@keyframes pulseReady {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+@keyframes currentPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.otp-step-label {
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: 0.3s;
+}
+
+.otp-step-wrapper.active .otp-step-label {
+    color: var(--otp-text-main);
+}
+
+.otp-receipt-section {
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.otp-receipt-title {
+    font-family: "Oswald", sans-serif;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.otp-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.otp-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #222;
+    padding-bottom: 15px;
+}
+
+.otp-item-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.otp-item-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.otp-item-qty {
+    background: #222;
+    color: var(--otp-red);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 14px;
+}
+
+.otp-item-name {
+    color: var(--otp-text-main);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.otp-item-price {
+    color: var(--otp-text-main);
+    font-weight: bold;
+}
+
+.otp-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #111;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
+.otp-total-text {
+    color: var(--otp-text-main);
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.otp-total-amount {
+    color: var(--otp-red);
+    font-size: 24px;
+    font-weight: 900;
+}
+
+@media screen and (max-width: 768px) {
+    .otp-header-section {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .otp-search-form {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   NEW ORDER TRACKER CLASSES & RESPONSIVENESS
+   ========================================= */
+
+.otp-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.otp-refresh-btn {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 5px;
+    padding: 5px;
+    transition: 0.3s;
+}
+
+.otp-refresh-btn:hover {
+    color: var(--otp-red);
+}
+
+.otp-search-icon {
+    color: #ef4444;
+    margin-left: 15px;
+}
+
+.otp-search-clear {
+    color: #888;
+    cursor: pointer;
+    margin-right: 15px;
+    padding: 5px;
+}
+
+.otp-order-type {
+    font-size: 12px;
+    border: 1px solid #ffc107;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #ffc107;
+    display: inline-block;
+    width: max-content;
+}
+
+/* =========================================
+   📱 MOBILE RESPONSIVENESS FIXES (COMPACT CARD)
+   ========================================= */
+@media screen and (max-width: 768px) {
+
+    /* Header & Search */
+    .otp-header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding-bottom: 15px;
+    }
+
+    .otp-title {
+        font-size: 22px;
+        /* Title thora compact kiya */
+    }
+
+    .otp-search-form {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 2px 10px;
+        /* Slim search bar */
+    }
+
+    /* 🔥 Card Header (Compact - Wapis Row Mein) */
+    .otp-card-header {
+        flex-direction: row;
+        /* Opar neechay ki bajaye amne samne */
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 15px;
+        /* Padding kam ki */
+    }
+
+    .otp-order-info {
+        gap: 2px;
+        /* Hisson ke darmian gap khatam kiya */
+    }
+
+    .otp-order-id {
+        font-size: 16px;
+    }
+
+    .otp-order-time {
+        font-size: 11px;
+    }
+
+    .otp-order-type {
+        font-size: 10px;
+        padding: 2px 6px;
+        margin-top: 4px;
+    }
+
+    .otp-status-badge {
+        align-self: center;
+        padding: 4px 10px;
+        font-size: 10px;
+        /* Badge chota kiya */
+    }
+
+    /* 🔥 Progress Tracker (Slimmer) */
+    .otp-progress-section {
+        padding: 15px 10px;
+        /* Vertical jagah bohat bacha li */
+    }
+
+    .otp-progress-track {
+        top: 14px;
+        left: 15px;
+        right: 15px;
+        height: 4px;
+        /* Patla track */
+    }
+
+    .otp-step-wrapper {
+        width: 50px;
+    }
+
+    .otp-step-icon {
+        width: 30px;
+        /* Icons chotay kiye */
+        height: 30px;
+        font-size: 12px;
+        border-width: 2px;
+    }
+
+    .otp-step-label {
+        font-size: 9px;
+        margin-top: 8px;
+    }
+
+    /* 🔥 Receipt Section (Compact) */
+    .otp-receipt-section {
+        padding: 12px 15px;
+    }
+
+    .otp-receipt-title {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .otp-items-list {
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .otp-item-row {
+        padding-bottom: 8px;
+        margin-bottom: 0px;
+        /* Extra margin bilkul khatam */
+    }
+
+    .otp-item-name {
+        font-size: 13px;
+    }
+
+    .otp-item-qty {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+        border-radius: 6px;
+    }
+
+    .otp-item-price {
+        font-size: 13px;
+    }
+
+    /* Total Bill Box */
+    .otp-total-row {
+        padding: 10px 12px;
+        /* Patla total box */
+        flex-direction: row;
+        /* Wapis row me */
+        align-items: center;
+    }
+
+    .otp-total-text {
+        font-size: 14px;
+    }
+
+    .otp-total-amount {
+        font-size: 18px;
+    }
+}

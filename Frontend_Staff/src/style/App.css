@@ -1,0 +1,99 @@
+/* =========================================
+   0. THEME VARIABLES (Permanent Dark Theme)
+   ========================================= */
+
+/* =========================================
+   🛒 FLOATING CART BUTTON (Dark Themed)
+   ========================================= */
+.cart-floating-btn {
+  position: fixed; /* Screen par apni jagah fixed rahay */
+  bottom: 30px;
+  right: 30px;
+
+  /* Size & Shape */
+  width: 65px;
+  height: 65px;
+
+  background-color: var(--btn-main); /* Hamesha Red rahega */
+  color: var(--btn-text);
+  border-radius: 50%; /* Mukammal Gol (Circle) */
+
+  /* Layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  z-index: 9999; /* Sabse upar nazar aayega */
+
+  /* 3D Effects (Dark Mode friendly) */
+  box-shadow: var(--shadow-glow);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+
+  transition: all 0.3s ease;
+  animation: floatBtn 3s ease-in-out infinite; /* Hawa mein tairne wali animation */
+}
+
+/* Hover Effect (Jab mouse upar aaye) */
+.cart-floating-btn:hover {
+  transform: scale(1.1); /* Thora bara hoga */
+  background-color: #fff; /* Hover par Deep Black ho jayega */
+  color: var(--btn-main); /* Text Red ho jayega */
+  border-color: var(--btn-main); /* Border bhi red glow karega */
+}
+
+/* Count Badge (Item Ginti) */
+.floating-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+
+  background-color: var(--badge-bg); /* Dark Grey */
+  color: var(--badge-text); /* Red Number */
+
+  font-size: 13px;
+  font-weight: 800;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px solid var(--badge-border); /* Dark Border */
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes floatBtn {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* --- MOBILE ADJUSTMENT --- */
+@media screen and (max-width: 768px) {
+  .cart-floating-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px; /* Mobile par screen choti hoti hai to button bhi chota */
+  }
+}
+
